@@ -1,0 +1,44 @@
+<header class="sticky top-0 bg-white z-30">
+  <nav
+    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+  >
+    <a
+      href="{% url 'index' %}"
+      class="font-poppins font-semibold text-lg md:text-2xl"
+    >
+      LookxxMaxxing
+    </a>
+    <div class="flex justify-center items-center md:gap-1">
+      <!-- business -->
+      {% if request.user.is_operator %}
+      <a
+        href="/business"
+        class="bg-black text-sm md:text-base font-poppins text-white px-3 md:px-5 py-2 rounded-full"
+        >Business</a
+      >
+      {% else %}
+      <a
+        href="/business"
+        class="bg-black text-sm md:text-base font-poppins text-white px-3 md:px-5 py-2 rounded-full"
+        >For business</a
+      >
+      {% endif %}
+
+      <!-- options -->
+
+      {% if request.user.is_authenticated %}
+      <!-- prettier-ignore -->
+      {% include 'components/user-menu.html' %}
+      {% else %}
+      <button
+        data-modal-target="login-modal"
+        data-modal-toggle="login-modal"
+        class="font-poppins font-semibold p-2 text-primary"
+        type="button"
+      >
+        Login
+      </button>
+      {% endif %}
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,71 @@
+{% extends 'pages/frontend/base.html' %} {% load static %}
+<!-- base -->
+{% block base %}
+<main class="container min-h-screen my-5 md:my-20">
+  <h1 class="text-3xl md:text-5xl font-extrabold font-poppins">
+    {{salon.salon_name}}
+  </h1>
+  <div class="md:flex space-y-1 md:space-y-0 md:space-x-2 my-2">
+    <h5 class="">
+      <b>
+        5.0
+        <!--  -->
+        {% for i in "12345" %}
+        <i class="fa-solid fa-star"></i>
+        <!--  -->
+        {% endfor %}
+      </b>
+      <span class="text-secondary">(255)</span>
+    </h5>
+    <span class="hidden md:block">•</span>
+    <h5 class="text-neutral-500">Open until 23:55</h5>
+    <span class="hidden md:block">•</span>
+    <h5 class="text-neutral-500">{{salon.street}}, {{salon.city}}</h5>
+    <h5 class="text-secondary font-semibold">Get directions</h5>
+  </div>
+  <!-- gallery -->
+  <div class="grid grid-cols-6 gap-4">
+    <div class="col-span-6 lg:col-span-4">
+      {% if salon.salon_images.first %}
+      <img
+        src="{{ salon.salon_images.first.image.url }}"
+        alt="Image 1"
+        class="w-full h-full object-cover rounded-xl pointer-events-none"
+      />
+      {% endif %}
+    </div>
+    <div class="flex flex-row lg:flex-col gap-2 col-span-6 lg:col-span-2">
+      {% for i in salon.salon_images.all|slice:"1:3" %}
+      <img
+        src="{{ i.image.url }}"
+        alt="Image 1"
+        class="flex-1 w-1/2 lg:w-full h-full object-cover rounded-xl pointer-events-none"
+      />
+      {% endfor %}
+    </div>
+  </div>
+  <div class="grid grid-cols-6 gap-4 my-5 md:my-20">
+    <section class="col-span-6 lg:col-span-4">
+      <!-- Services -->
+      <div class="mb-10">
+        <h1
+          class="text-xl md:text-4xl font-extrabold font-poppins mb-5 md:mb-10"
+        >
+          Services
+        </h1>
+        <!-- prettier-ignore -->
+        {% for service in salon.salon_service.all %}
+        {% include 'components/service-card.html' with service=service %}
+        {% endfor %}
+      </div>
+      <!-- About -->
+      <div class="mb-10">
+        <h1 class="text-xl md:text-4xl font-extrabold font-poppins mb-5">
+          About
+        </h1>
+        <p class="font-poppins">{{salon.description}}</p>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock %}

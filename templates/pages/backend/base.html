@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LookxxMaxxing</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="relative">
+      <!-- sidebar -->
+      {% include 'components/sidebar.html' %}
+
+      <!-- user-menu -->
+      <div class="absolute top-5 right-5">
+        {% include 'components/user-menu.html' %}
+      </div>
+
+      <!-- body section -->
+      <div class="p-4 sm:ml-72">
+        <div class="p-4 z-20">{% block base %} {% endblock %}</div>
+      </div>
+    </main>
+
+    <!-- scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/flowbite.js' %}"></script>
+    <script src="{% static 'js/horizontal-scroll.js' %}"></script>
+  </body>
+</html>

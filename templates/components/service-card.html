@@ -1,0 +1,21 @@
+<div
+  class="flex justify-between items-center md:border border-neutral-300 p-4 md:p-5 rounded-xl cursor-pointer hover:bg-gray-100 md:mb-2"
+>
+  <div>
+    <h4
+      title="Manicure And Pedicure"
+      class="font-poppins text-base md:text-lg truncate w-[230px] lg:w-[350px]"
+    >
+      {{service.service_name}}
+    </h4>
+    <p class="text-neutral-500 text-sm md:text-base">
+      {{service.duration}} mins
+    </p>
+    <h5 class="font-poppins text-sm md:text-base mt-2">
+      INR {{service.price}}
+    </h5>
+  </div>
+  <button class="border font-poppins border-neutral-300 py-1 px-3 rounded-full">
+    Book
+  </button>
+</div>

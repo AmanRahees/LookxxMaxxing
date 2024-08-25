@@ -1,0 +1,15 @@
+<li>
+  <a
+    href="{{item.url_for}}"
+    class="flex items-center p-2 font-semibold text-white group group-hover:text-primary {% if item.url_name == request.resolver_match.url_name %}border-r-4 border-primary{% endif %}"
+  >
+    <i
+      class="{{item.icon}} text-lg group-hover:text-primary
+       {% if item.url_name == request.resolver_match.url_name %}text-primary{% endif %}"
+    ></i>
+    <span
+      class="ms-3 group-hover:text-primary {% if item.url_name == request.resolver_match.url_name %}text-primary{% endif %}"
+      >{{item.name}}</span
+    >
+  </a>
+</li>

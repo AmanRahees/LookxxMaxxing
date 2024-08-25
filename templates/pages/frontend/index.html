@@ -1,0 +1,119 @@
+{% extends 'pages/frontend/base.html' %} {% load static %}
+<!-- base -->
+{% block base %}
+<main class="container">
+  <!-- Hero -->
+  <div
+    class="relative bg-purple-200 p-10 md:p-20 h-[230px] md:h-[320px] lg:h-[350px] my-7 overflow-hidden"
+  >
+    <h1
+      class="font-poppins text-center mb-5 md:mb-10 font-bold text-lg md:text-3xl"
+    >
+      Discover & book local <br />
+      beauty professionals
+    </h1>
+    {% include 'components/hero-search.html' %}
+    <img
+      src="{% static 'images/hero-2.png' %}"
+      alt=""
+      class="absolute hidden md:block -bottom-10 lg:bottom-0 -right-10 lg:right-10 w-[500px] pointer-events-none"
+    />
+    <div class="absolute font-poppins bottom-2 md:bottom-5 left-5 md:left-10">
+      <span class="font-semibold text-sm">Grow your business with us</span>
+      <button class="text-xs bg-primary text-white px-2 py-1 rounded-lg">
+        Set up
+      </button>
+    </div>
+  </div>
+  <!-- Popular -->
+  <div class="mt-10 mb-16">
+    <h1 class="font-poppins font-bold text-xl md:text-3xl mb-5">Popular</h1>
+    <div class="relative w-full">
+      <button
+        id="latest-left"
+        class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-r-xl text-white"
+      >
+        <i class="fa-solid fa-angle-left"></i>
+      </button>
+
+      <div
+        id="latest-container"
+        class="flex overflow-x-scroll scroll-smooth hide-scroll-bar space-x-4"
+      >
+        {% for item in popular %}
+        <!-- prettier-ignore -->
+        {% include 'components/card.html' with item=item %}
+        {% endfor %}
+      </div>
+
+      <button
+        id="latest-right"
+        class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-l-xl text-white"
+      >
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Latest -->
+  <div class="mt-10 mb-16">
+    <h1 class="font-poppins font-bold text-xl md:text-3xl mb-5">Latest</h1>
+    <div class="relative w-full">
+      <button
+        id="latest-left"
+        class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-r-xl text-white"
+      >
+        <i class="fa-solid fa-angle-left"></i>
+      </button>
+
+      <div
+        id="latest-container"
+        class="flex overflow-x-scroll scroll-smooth hide-scroll-bar space-x-4"
+      >
+        {% for item in latest %}
+        <!-- prettier-ignore -->
+        {% include 'components/card.html' with item=item %}
+        {% endfor %}
+      </div>
+
+      <button
+        id="latest-right"
+        class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-l-xl text-white"
+      >
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Business -->
+  <div class="relative mt-3 lg:mt-20 mb-7 overflow-x-hidden lg:pt-10">
+    <div
+      class="flex md:justify-end bg-gray-200 w-full p-10 lg:p-20 h-[260px] lg:h-[400px]"
+    >
+      <picture
+        class="absolute -right-20 md:-left-10 lg:left-20 bottom-0 pointer-events-none"
+      >
+        <img
+          src="{% static 'images/hero-3.png' %}"
+          alt=""
+          class="w-[200px] md:w-[300px] lg:w-[500px]"
+        />
+      </picture>
+      <div class="">
+        <h1 class="font-poppins font-bold text-xl lg:text-5xl mb-5">
+          Set up your business <br />
+          on LookxxMaxxing
+        </h1>
+        <p class="font-black text-sm md:text-base">
+          Join the largest network of clients searching for top professionals.
+        </p>
+        <a
+          href="#"
+          class="inline-block text-sm bg-primary text-white px-3 py-2 rounded-lg mt-5"
+        >
+          Learn more
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

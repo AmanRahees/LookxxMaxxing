@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LookxxMaxxing</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Toast -->
+    {% for message in messages %}
+    <!-- prettier-ignore -->
+    {% if message.tags == 'error' %}
+    <!-- prettier-ignore -->
+    {% include 'components/error-toast.html' %}
+    <!-- prettier-ignore -->
+    {% else %}
+    <!-- prettier-ignore -->
+    {% include 'components/success-toast.html' %}
+    <!-- prettier-ignore -->
+    {% endif %} {% endfor %}
+
+    <!-- Header -->
+    {% include 'components/header.html' %}
+
+    <!-- Auth -->
+    {% include 'modals/login.html' %} {% include 'modals/register.html' %}
+
+    <!-- section -->
+    {% block base %} {% endblock %}
+
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+
+    <!-- scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/flowbite.js' %}"></script>
+    <script src="{% static 'js/flowbite.js.map' %}"></script>
+    <script src="{% static 'js/horizontal-scroll.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% load tags %}
+
+<a
+  href="{% url 'salon-detail' item.salon_name|format_url item.id|encode %}"
+  class="border border-zinc-300 w-[48%] md:w-[30%] lg:w-[25%] overflow-hidden rounded-lg"
+>
+  {% if item.salon_images.first %}
+  <img src="{{ item.salon_images.first.image.url }}" alt="" />
+  {% else %}
+  <img src="" alt="{{item.salon_name}}" />
+  {% endif %}
+  <div class="p-3 space-y-1">
+    <h1 class="font-semibold">{{item.salon_name}}</h1>
+    <h5 class="text-xs">
+      <b> 5.0 <i class="fa-solid fa-star"></i> </b>
+      <span class="">(100)</span>
+    </h5>
+    <p class="font-poppins border inline-block text-xs px-1.5 py-1 rounded-xl">
+      Barbershop
+    </p>
+  </div>
+</a>
