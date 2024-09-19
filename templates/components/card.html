@@ -7,16 +7,23 @@
   {% if item.salon_images.first %}
   <img src="{{ item.salon_images.first.image.url }}" alt="" />
   {% else %}
-  <img src="" alt="{{item.salon_name}}" />
+  <div
+    class="w-full h-[200px] bg-gray-100 animate-pulse duration-500 transition-all"
+  ></div>
   {% endif %}
   <div class="p-3 space-y-1">
     <h1 class="font-semibold">{{item.salon_name}}</h1>
     <h5 class="text-xs">
-      <b> 5.0 <i class="fa-solid fa-star"></i> </b>
-      <span class="">(100)</span>
+      <b>
+        {{item.salon_review.all|average_rating}}
+        <i class="fa-solid fa-star"></i>
+      </b>
+      <span class="">({{item.salon_review.all|length}})</span>
     </h5>
-    <p class="font-poppins border inline-block text-xs px-1.5 py-1 rounded-xl">
-      Barbershop
+    <p
+      class="font-poppins capitalize border inline-block text-xs px-1.5 py-1 rounded-xl"
+    >
+      {{item.salon_type}}
     </p>
   </div>
 </a>

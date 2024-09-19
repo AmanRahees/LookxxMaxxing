@@ -14,6 +14,11 @@ STATUS_CHOICES = [
     ("rejected", "Rejected"),
 ]
 
+SALON_TYPES = [
+    ("barbershop", "Barbershop"),
+    ("beauty parlour", "Beauty Parlour"),
+]
+
 
 class Salons(models.Model):
     owner = models.ForeignKey(
@@ -23,8 +28,14 @@ class Salons(models.Model):
     description = models.TextField()
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
+    directions = models.CharField(max_length=1024, null=True)
     mobile = models.CharField(max_length=20)
     services = models.TextField()
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
+    salon_type = models.CharField(
+        max_length=20, choices=SALON_TYPES, default="barbershop"
+    )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
@@ -58,9 +69,8 @@ class Services(models.Model):
         Salons, related_name="salon_service", on_delete=models.CASCADE
     )
     service_name = models.CharField(max_length=50)
-    duration = models.IntegerField(default=30)
+    duration = models.IntegerField(default=30, help_text="Duration in minutes")
     price = models.IntegerField(default=500)
-    status = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.salon.salon_name} -> {self.service_name}"

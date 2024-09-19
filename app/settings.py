@@ -96,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 
@@ -124,3 +124,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CSRF_TRUSTED_ORIGINS = [
     "https://f6f0-2402-3a80-1920-9d8f-887-8e4e-9e59-53f5.ngrok-free.app",
 ]
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS")
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")

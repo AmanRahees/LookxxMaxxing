@@ -25,6 +25,7 @@
       </button>
     </div>
   </div>
+  {% if popular %}
   <!-- Popular -->
   <div class="mt-10 mb-16">
     <h1 class="font-poppins font-bold text-xl md:text-3xl mb-5">Popular</h1>
@@ -54,6 +55,9 @@
       </button>
     </div>
   </div>
+  {% endif %}
+  <!--  -->
+  {% if latest %}
   <!-- Latest -->
   <div class="mt-10 mb-16">
     <h1 class="font-poppins font-bold text-xl md:text-3xl mb-5">Latest</h1>
@@ -83,6 +87,7 @@
       </button>
     </div>
   </div>
+  {% endif %}
   <!-- Business -->
   <div class="relative mt-3 lg:mt-20 mb-7 overflow-x-hidden lg:pt-10">
     <div
@@ -115,5 +120,7 @@
     </div>
   </div>
 </main>
+
+<script src="{% static 'js/horizontal-scroll.js' %}"></script>
 
 {% endblock %}

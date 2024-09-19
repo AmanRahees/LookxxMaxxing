@@ -1,3 +1,5 @@
+{% load tags %}
+
 <div
   class="flex justify-between items-center md:border border-neutral-300 p-4 md:p-5 rounded-xl cursor-pointer hover:bg-gray-100 md:mb-2"
 >
@@ -15,7 +17,10 @@
       INR {{service.price}}
     </h5>
   </div>
-  <button class="border font-poppins border-neutral-300 py-1 px-3 rounded-full">
+  <a
+    href="{% url 'service-details' service.salon.salon_name|format_url service.salon.id|encode service.id|encode %}"
+    class="border font-poppins border-neutral-300 py-1 px-3 rounded-full"
+  >
     Book
-  </button>
+  </a>
 </div>

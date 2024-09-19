@@ -26,8 +26,10 @@
     <!-- Header -->
     {% include 'components/header.html' %}
 
-    <!-- Auth -->
-    {% include 'modals/login.html' %} {% include 'modals/register.html' %}
+    <!-- Modals -->
+    {% include 'modals/login.html' %}
+    <!--  -->
+    {% include 'modals/register.html' %}
 
     <!-- section -->
     {% block base %} {% endblock %}
@@ -37,8 +39,8 @@
 
     <!-- scripts -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/flowbite.js' %}"></script>
     <script src="{% static 'js/flowbite.js.map' %}"></script>
-    <script src="{% static 'js/horizontal-scroll.js' %}"></script>
   </body>
 </html>

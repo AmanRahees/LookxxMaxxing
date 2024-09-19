@@ -1,0 +1,30 @@
+{% load tags %}
+
+<div class="p-3 rounded-md">
+  <div class="flex items-center gap-2">
+    <div
+      class="flex justify-center items-center bg-violet-100 text-secondary font-bold rounded-full w-16 h-16"
+    >
+      <h1 class="text-xl capitalize">
+        {{review.customer.username|slice:":1"}}
+      </h1>
+    </div>
+    <div class="">
+      <h1 class="font-semibold capitalize">{{review.customer.username}}</h1>
+      <p class="text-neutral-500 text-xs">{{review.created_at}}</p>
+    </div>
+  </div>
+  <div class="flex my-3 text-sm">
+    {% for i in 1|rating_of:5 %}
+    <!--  -->
+    {% if i <= review.rating %}
+    <i class="fa-solid fa-star rated_star"></i>
+    <!-- Filled star -->
+    {% else %}
+    <i class="fa-solid fa-star unrated_star"></i>
+    <!-- Empty star -->
+    {% endif %} {% endfor %}
+  </div>
+  <p class="">{{review.comment}}</p>
+  <!-- <i class="fa-solid fa-star"></i> -->
+</div>

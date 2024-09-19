@@ -46,3 +46,25 @@ body::-webkit-scrollbar {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+
+.star {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.2s;
+}
+
+.star.active,
+.rated_star {
+  color: #000;
+}
+
+.star:hover,
+.star:hover ~ .star,
+.unrated_star {
+  color: #ddd;
+}
+
+.star.hovered {
+  color: #000;
+}

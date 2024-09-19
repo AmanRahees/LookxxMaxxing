@@ -1,6 +1,8 @@
 from django import template
 from django.urls import reverse
+from datetime import datetime, timedelta
 from app.utils import encode_id, decode_id
+from core.models import Bookings
 import re
 
 register = template.Library()
@@ -54,3 +56,34 @@ def format_url(name):
 @register.filter
 def encode(value):
     return encode_id(value)
+
+
+@register.filter
+def set_range(value):
+    return range(value)
+
+
+@register.simple_tag
+def tomorrow_date():
+    return (datetime.now() + timedelta(days=1)).date()
+
+
+@register.simple_tag
+def has_booked_service(user, salon_id):
+    if not user.is_authenticated:
+        return False
+    return Bookings.objects.filter(customer=user, service__salon_id=salon_id).exists()
+
+
+@register.filter(name="rating_of")
+def rating_of(value, arg):
+    return range(value, arg + 1)
+
+
+@register.filter(name="average_rating")
+def average_rating(reviews):
+    if reviews.exists():
+        total_reviews = reviews.count()
+        total_rating = sum([review.rating for review in reviews])
+        return round(total_rating / total_reviews, 1)
+    return 0.0

@@ -1,0 +1,45 @@
+{% extends 'pages/frontend/base.html' %} {% load static %} {% load tags %}
+<!-- base -->
+{% block base %}
+<div class="h-[100px] pt-10">{% include 'components/hero-search.html' %}</div>
+<main class="container min-h-screen my-5 md:my-20">
+  {% if total_results > 0 %}
+  <div class="grid grid-cols-4">
+    {% for item in salons %}
+    <a
+      href="{% url 'salon-detail' item.salon_name|format_url item.id|encode %}"
+      class="border border-zinc-300 overflow-hidden rounded-lg"
+    >
+      {% if item.salon_images.first %}
+      <img src="{{ item.salon_images.first.image.url }}" alt="" />
+      {% else %}
+      <img src="" alt="{{item.salon_name}}" />
+      {% endif %}
+      <div class="p-3 space-y-1">
+        <h1 class="font-semibold">{{item.salon_name}}</h1>
+        <h5 class="text-xs">
+          <b> 5.0 <i class="fa-solid fa-star"></i> </b>
+          <span class="">(100)</span>
+        </h5>
+        <p
+          class="font-poppins border inline-block text-xs px-1.5 py-1 rounded-xl"
+        >
+          Barbershop
+        </p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="grid place-items-center">
+    <span class="block mb-5 relative">
+      <i class="fa-solid fa-server text-7xl"></i>
+      <i
+        class="fa-solid fa-circle-xmark absolute text-lg bottom-0 right-0 text-red-600"
+      ></i>
+    </span>
+    <h1 class="font-bold font-poppins text-3xl">No Salons Found!</h1>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

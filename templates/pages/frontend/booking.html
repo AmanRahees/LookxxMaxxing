@@ -1,0 +1,79 @@
+{% extends 'pages/frontend/base.html' %} {% load static %}
+<!-- base -->
+{% load tags %} {% block base %}
+<main class="container min-h-screen my-5 md:my-20">
+  <h1 class="text-3xl md:text-5xl font-extrabold font-poppins">Booking</h1>
+  <!-- details -->
+  <div class="flex flex-wrap my-8 gap-2">
+    <img
+      src="{{salon.salon_images.first.image.url}}"
+      alt=""
+      class="w-[200px] md:w-[300px] rounded-lg"
+    />
+    <div class="lg:space-y-2">
+      <h1 class="font-bold lg:text-2xl">{{salon.salon_name}}</h1>
+      <p class="">
+        <i class="fa-solid fa-location-dot text-gray-700"></i>:
+        <b>{{salon.street}}, {{salon.city}}</b>
+      </p>
+      <p class="">
+        <i class="fa-solid fa-scissors -rotate-90 text-gray-700"></i>:
+        <b>{{service.service_name}}</b>
+      </p>
+      <p class="">
+        <i class="fa-solid fa-clock text-gray-700"></i>:
+        <b> {{service.duration}} mins</b>
+      </p>
+    </div>
+  </div>
+  <!-- day selector -->
+  <div class="flex items-center gap-3 my-4">
+    {% now "Y-m-d" as today %} {% tomorrow_date as tomorrow %}
+    <a
+      href="{% url 'service-details' service.salon.salon_name|format_url service.salon.id|encode service.id|encode %}?date={{ today }}"
+      class="border px-4 py-2 text-sm rounded-lg {% if selected_date|date:'Y-m-d' == today %}bg-black text-white{% endif %}"
+    >
+      Today
+    </a>
+    <a
+      href="{% url 'service-details' service.salon.salon_name|format_url service.salon.id|encode service.id|encode %}?date={{ tomorrow|date:'Y-m-d' }}"
+      class="border px-4 py-2 text-sm rounded-lg {% if selected_date == tomorrow %}bg-black text-white{% endif %}"
+    >
+      Tomorrow
+    </a>
+  </div>
+  <ul class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2">
+    {% for slot in slots %}
+    <li class="border text-center overflow-hidden">
+      <button
+        class="slot-btn px-3 py-2 w-full"
+        data-slot="{{slot}}"
+        data-salon="{{salon.id|encode}}"
+        data-service="{{service.id|encode}}"
+        type="button"
+      >
+        {{ slot|date:"g:i A" }}
+      </button>
+    </li>
+    {% empty %}
+    <li>No available slots</li>
+    {% endfor %}
+  </ul>
+  <div class="flex justify-end my-4">
+    <button
+      id="bookConfirmBtn"
+      data-modal-target="book-confirm-modal"
+      data-modal-toggle="book-confirm-modal"
+      class="bg-secondary w-full md:w-auto text-white font-poppins text-sm px-4 py-2 hidden"
+      type="button"
+    >
+      Confirm
+    </button>
+  </div>
+</main>
+<!-- Confirmation Modal -->
+{% include 'modals/book-confirm.html' %}
+
+<script src="{% static 'js/booking.js' %}"></script>
+
+{% endblock %}

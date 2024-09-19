@@ -9,5 +9,21 @@ urlpatterns = [
     path("logout", logoutView, name="logout"),
     #
     path("", index, name="index"),
-    path("salon/<str:name>/<str:encoded_id>", salon_detail, name="salon-detail"),
+    path("salons", search_results, name="results"),
+    path("salon/<str:name>/<str:salon_id>", salon_detail, name="salon-detail"),
+    path(
+        "booking/<str:name>/<str:salon_id>/<str:service_id>",
+        booking_page,
+        name="service-details",
+    ),
+    path(
+        "confirm/<str:service_id>",
+        confirm_booking,
+        name="confirm-booking",
+    ),
+    path(
+        "review/<str:name>/<str:salon_id>",
+        review,
+        name="review-salon",
+    ),
 ]

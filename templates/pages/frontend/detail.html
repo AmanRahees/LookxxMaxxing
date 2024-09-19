@@ -1,4 +1,4 @@
-{% extends 'pages/frontend/base.html' %} {% load static %}
+{% extends 'pages/frontend/base.html' %} {% load static %} {% load tags %}
 <!-- base -->
 {% block base %}
 <main class="container min-h-screen my-5 md:my-20">
@@ -8,20 +8,30 @@
   <div class="md:flex space-y-1 md:space-y-0 md:space-x-2 my-2">
     <h5 class="">
       <b>
-        5.0
+        {{salon.salon_review.all|average_rating}}
         <!--  -->
-        {% for i in "12345" %}
-        <i class="fa-solid fa-star"></i>
+        {% for i in 1|rating_of:5 %}
         <!--  -->
-        {% endfor %}
+        {% if i <= salon.salon_review.all|average_rating %}
+        <i class="fa-solid fa-star rated_star"></i>
+        <!-- Filled star -->
+        {% else %}
+        <i class="fa-solid fa-star unrated_star"></i>
+        <!-- Empty star -->
+        {% endif %} {% endfor %}
       </b>
       <span class="text-secondary">(255)</span>
     </h5>
     <span class="hidden md:block">•</span>
-    <h5 class="text-neutral-500">Open until 23:55</h5>
+    <h5 class="text-neutral-500">Open until {{salon.closing_time}}</h5>
     <span class="hidden md:block">•</span>
     <h5 class="text-neutral-500">{{salon.street}}, {{salon.city}}</h5>
-    <h5 class="text-secondary font-semibold">Get directions</h5>
+    <a
+      href="{{salon.directions}}"
+      target="_blank"
+      class="text-secondary font-semibold"
+      >Get directions</a
+    >
   </div>
   <!-- gallery -->
   <div class="grid grid-cols-6 gap-4">
@@ -32,6 +42,8 @@
         alt="Image 1"
         class="w-full h-full object-cover rounded-xl pointer-events-none"
       />
+      {% else %}
+      <div class="w-full h-[300px] bg-gray-100"></div>
       {% endif %}
     </div>
     <div class="flex flex-row lg:flex-col gap-2 col-span-6 lg:col-span-2">
@@ -44,7 +56,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="grid grid-cols-6 gap-4 my-5 md:my-20">
+  <div class="grid grid-cols-6 gap-4 my-5 md:my-20 items-start">
     <section class="col-span-6 lg:col-span-4">
       <!-- Services -->
       <div class="mb-10">
@@ -53,10 +65,14 @@
         >
           Services
         </h1>
+        {% if salon.salon_service.all %}
         <!-- prettier-ignore -->
         {% for service in salon.salon_service.all %}
         {% include 'components/service-card.html' with service=service %}
         {% endfor %}
+        {% else %}
+        <h1 class="">no services</h1>
+        {% endif %}
       </div>
       <!-- About -->
       <div class="mb-10">
@@ -65,7 +81,100 @@
         </h1>
         <p class="font-poppins">{{salon.description}}</p>
       </div>
+      <!-- Reviews -->
+      <div class="mb-10">
+        <h1
+          class="flex justify-between items-center text-xl md:text-4xl font-extrabold font-poppins mb-2 md:mb-5"
+        >
+          Reviews
+          <!--  -->
+          {% has_booked_service request.user salon.id as has_booking %}
+          <!--  -->
+          {% if has_booking %}
+          <button
+            data-modal-target="review-modal"
+            data-modal-toggle="review-modal"
+            class="bg-black text-white p-2 text-xs"
+          >
+            Write review +
+          </button>
+          {% endif %}
+        </h1>
+        <h3 class="text-base md:text-xl">
+          {% for i in 1|rating_of:5 %}
+          <!--  -->
+          {% if i <= salon.salon_review.all|average_rating %}
+          <i class="fa-solid fa-star rated_star"></i>
+          <!-- Filled star -->
+          {% else %}
+          <i class="fa-solid fa-star unrated_star"></i>
+          <!-- Empty star -->
+          {% endif %} {% endfor %}
+        </h3>
+        <h5 class="font-bold">
+          {{ salon.salon_review.all|average_rating }}
+          <span class="text-secondary"
+            >({{ salon.salon_review.all|length }})</span
+          >
+        </h5>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+          {% for review in salon.salon_review.all %}
+          <!--  -->
+          {% include 'components/review-card.html' %}
+          <!--  -->
+          {% endfor %}
+        </div>
+      </div>
     </section>
+    <div
+      class="hidden lg:block col-span-6 lg:col-span-2 border p-8 sticky top-[100px]"
+    >
+      <h1 class="text-xl md:text-3xl font-extrabold font-poppins">
+        {{salon.salon_name}}
+      </h1>
+      <h5 class="my-3">
+        <b>
+          {{salon.salon_review.all|average_rating}}
+          <!--  -->
+          {% for i in 1|rating_of:5 %}
+          <!--  -->
+          {% if i <= salon.salon_review.all|average_rating %}
+          <i class="fa-solid fa-star rated_star"></i>
+          <!-- Filled star -->
+          {% else %}
+          <i class="fa-solid fa-star unrated_star"></i>
+          <!-- Empty star -->
+          {% endif %} {% endfor %}
+        </b>
+        <span class="text-secondary"
+          >({{ salon.salon_review.all|length }})</span
+        >
+      </h5>
+      <hr class="my-2 border-neutral-300" />
+      <h5 class="mb-3">
+        <i class="fa-regular fa-clock"></i> &nbsp;
+        <span class="text-green-700"> Open </span>
+        until {{salon.closing_time}}
+      </h5>
+      <h5 class="mb-3">
+        <i class="fa-solid fa-location-dot"></i> &nbsp; {{salon.street}},
+        {{salon.city}} &nbsp;
+        <a
+          href="{{salon.directions}}"
+          target="_blank"
+          class="text-secondary font-semibold"
+          >Get directions</a
+        >
+      </h5>
+      <hr class="my-2 border-neutral-300" />
+      <button class="bg-black text-white w-full py-2 rounded-md">
+        Book now
+      </button>
+    </div>
   </div>
 </main>
+
+<!-- Review Modal -->
+{% include 'modals/review.html' %}
+<!--  -->
 {% endblock %}
