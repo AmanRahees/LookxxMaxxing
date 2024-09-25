@@ -31,14 +31,14 @@
     <h1 class="font-poppins font-bold text-xl md:text-3xl mb-5">Popular</h1>
     <div class="relative w-full">
       <button
-        id="latest-left"
+        id="popular-left"
         class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-r-xl text-white"
       >
         <i class="fa-solid fa-angle-left"></i>
       </button>
 
       <div
-        id="latest-container"
+        id="popular-container"
         class="flex overflow-x-scroll scroll-smooth hide-scroll-bar space-x-4"
       >
         {% for item in popular %}
@@ -48,7 +48,7 @@
       </div>
 
       <button
-        id="latest-right"
+        id="popular-right"
         class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 backdrop-blur rounded-l-xl text-white"
       >
         <i class="fa-solid fa-angle-right"></i>

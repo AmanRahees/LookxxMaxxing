@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.utils.timezone import make_aware
+from django.utils.timezone import make_aware, now
 from datetime import datetime, timedelta, date
 from dateutil import parser
-from django.utils.dateparse import parse_datetime
+from django.views.decorators.cache import never_cache
 from app.utils import decode_id
 from core.mail import sendBookingMail
 from business.models import Salons, Services
@@ -12,6 +12,7 @@ from core.models import Bookings, Reviews
 # Create your views here.
 
 
+@never_cache
 def index(request):
     salons = Salons.objects.all()
     context = {
@@ -21,6 +22,7 @@ def index(request):
     return render(request, "pages/frontend/index.html", context)
 
 
+@never_cache
 def salon_detail(request, name, salon_id):
     id = decode_id(salon_id)
     salon = Salons.objects.get(id=id)
@@ -28,6 +30,7 @@ def salon_detail(request, name, salon_id):
     return render(request, "pages/frontend/detail.html", context)
 
 
+@never_cache
 def search_results(request):
     if "search" in request.GET:
         key = request.GET.get("search")
@@ -72,7 +75,10 @@ def get_available_slots(salon, service, selected_date):
     return available_slots
 
 
+@never_cache
 def booking_page(request, name, salon_id, service_id):
+    if not request.user.is_authenticated:
+        return redirect(reverse("salon-detail", args=[name, salon_id]))
     salonId = decode_id(salon_id)
     serviceId = decode_id(service_id)
     salon = Salons.objects.get(id=salonId)
@@ -86,15 +92,18 @@ def booking_page(request, name, salon_id, service_id):
     else:
         selected_date = date.today()
     slots = get_available_slots(salon, service, selected_date)
+    current_time = now()
     context = {
         "slots": slots,
         "service": service,
         "salon": salon,
         "selected_date": selected_date,
+        "current_time": current_time,
     }
     return render(request, "pages/frontend/booking.html", context)
 
 
+@never_cache
 def confirm_booking(request, service_id):
     serviceId = decode_id(service_id)
     service = get_object_or_404(Services, id=serviceId)
@@ -118,6 +127,7 @@ def confirm_booking(request, service_id):
     return redirect("index")
 
 
+@never_cache
 def review(request, name, salon_id):
     salon = get_object_or_404(Salons, id=decode_id(salon_id))
     if request.method == "POST":
@@ -127,3 +137,7 @@ def review(request, name, salon_id):
             customer=request.user, salon=salon, rating=rating, comment=comment
         )
         return redirect(reverse("salon-detail", args=[name, salon_id]))
+
+
+def notFound(request, exception):
+    return render(request, "404.html", status=404)

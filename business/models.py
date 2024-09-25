@@ -29,8 +29,8 @@ class Salons(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     directions = models.CharField(max_length=1024, null=True)
-    mobile = models.CharField(max_length=20)
-    services = models.TextField()
+    mobile = models.CharField(max_length=20, null=True, blank=True)
+    services = models.TextField(default="Haircutting, Face Wash")
     opening_time = models.TimeField()
     closing_time = models.TimeField()
     salon_type = models.CharField(

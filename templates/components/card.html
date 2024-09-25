@@ -2,7 +2,7 @@
 
 <a
   href="{% url 'salon-detail' item.salon_name|format_url item.id|encode %}"
-  class="border border-zinc-300 w-[48%] md:w-[30%] lg:w-[25%] overflow-hidden rounded-lg"
+  class="border border-zinc-300 min-w-[48%] md:min-w-[30%] lg:min-w-[25%] overflow-hidden rounded-lg"
 >
   {% if item.salon_images.first %}
   <img src="{{ item.salon_images.first.image.url }}" alt="" />

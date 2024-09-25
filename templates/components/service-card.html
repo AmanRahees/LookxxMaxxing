@@ -17,10 +17,20 @@
       INR {{service.price}}
     </h5>
   </div>
+  {% if not request.user.is_authenticated %}
+  <button
+    disabled
+    title="Log in to book"
+    class="border font-poppins bg-zinc-900/20 text-zinc-400 border-neutral-300 py-1 px-3 rounded-full"
+  >
+    Book
+  </button>
+  {% else %}
   <a
     href="{% url 'service-details' service.salon.salon_name|format_url service.salon.id|encode service.id|encode %}"
     class="border font-poppins border-neutral-300 py-1 px-3 rounded-full"
   >
     Book
   </a>
+  {% endif %}
 </div>

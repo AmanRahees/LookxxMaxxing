@@ -4,7 +4,7 @@
 <div class="h-[100px] pt-10">{% include 'components/hero-search.html' %}</div>
 <main class="container min-h-screen my-5 md:my-20">
   {% if total_results > 0 %}
-  <div class="grid grid-cols-4">
+  <div class="grid grid-cols-4 gap-3">
     {% for item in salons %}
     <a
       href="{% url 'salon-detail' item.salon_name|format_url item.id|encode %}"

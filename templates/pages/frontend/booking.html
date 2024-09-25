@@ -45,6 +45,15 @@
   <ul class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2">
     {% for slot in slots %}
     <li class="border text-center overflow-hidden">
+      {% if slot < current_time %}
+      <button
+        disabled
+        class="slot-btn bg-zinc-300/10 text-zinc-400 px-3 py-2 w-full"
+      >
+        {{ slot|date:"g:i A" }}
+      </button>
+      <!--  -->
+      {% else %}
       <button
         class="slot-btn px-3 py-2 w-full"
         data-slot="{{slot}}"
@@ -54,6 +63,7 @@
       >
         {{ slot|date:"g:i A" }}
       </button>
+      {% endif %}
     </li>
     {% empty %}
     <li>No available slots</li>

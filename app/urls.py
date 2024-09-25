@@ -8,3 +8,5 @@ urlpatterns = [
     path("", include("base.urls")),
     path("admin/", include("core.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "base.views.notFound"
